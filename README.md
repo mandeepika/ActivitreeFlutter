@@ -1,12 +1,10 @@
-# activitree_edu_flutter
+# Activitree Edu Flutter Mobile App
 
-A new Flutter project.
+- This project is built with [Flutter](https://flutter.dev)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
+A few resources to get you started if this is your first time developing a Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
