@@ -1,4 +1,5 @@
 import 'package:activitree_edu_flutter/home.dart';
+import 'package:activitree_edu_flutter/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -17,10 +18,7 @@ class _NavState extends State<Nav> {
 
   static List<Widget> _widgetOptions = <Widget>[
     MyHomePage(title: 'Flutter Demo Home Page'),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    SignIn(),
     Text(
       'Me',
       style: optionStyle,
@@ -47,7 +45,7 @@ class _NavState extends State<Nav> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            title: Text('Business'),
+            title: Text('Sign In'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
