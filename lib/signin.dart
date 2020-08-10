@@ -122,7 +122,5 @@ class SignIn extends StatelessWidget {
         ],
       ),
     ));
-    
-  //return Text("Haaaai friendsss yooo!");
   }
 }
