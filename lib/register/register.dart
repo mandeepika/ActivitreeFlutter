@@ -1,5 +1,5 @@
+import 'package:activitree_edu_flutter/register/email-register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class RegisterPage extends StatelessWidget {
   void onPressed() {}
@@ -21,7 +21,11 @@ class RegisterPage extends StatelessWidget {
                 RaisedButton(
                     onPressed: onPressed, child: Text('Sign up with Phone')),
                 RaisedButton(
-                    onPressed: onPressed, child: Text('Sign up with Email')),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EmailRegisterPage())),
+                    child: Text('Sign up with Email')),
               ],
             )));
   }
