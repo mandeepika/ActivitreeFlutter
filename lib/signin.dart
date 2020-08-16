@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
+
 class SignIn extends StatelessWidget {
   // This widget is the root of your application.
     SignIn({Key key}) : super(key: key);
@@ -10,6 +11,7 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      appBar: AppBar(title: Text("Sign In")),
       resizeToAvoidBottomInset: false,
       body:
       SingleChildScrollView(
@@ -42,7 +44,7 @@ class SignIn extends StatelessWidget {
           const SizedBox(height: 20),
           Text('---OR---'),
           //const SizedBox(height: 30),
-          new Container(
+        new Container(
           margin: const EdgeInsets.all(30.0),
           child: Form(
           key: _formKey,
