@@ -1,25 +1,22 @@
+import 'package:activitree_edu_flutter/register/email-registration-form.dart';
+import 'package:activitree_edu_flutter/register/email-verification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class EmailRegisterPage extends StatelessWidget {
+class EmailRegisterPage extends StatefulWidget {
+  @override
+  _EmailRegisterState createState() => _EmailRegisterState();
+}
+
+class _EmailRegisterState extends State<EmailRegisterPage> {
   final _auth = FirebaseAuth.instance;
-  final _formKey = GlobalKey<FormState>();
+  bool _formSubmitted = false;
+  String _email;
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _passwordConfirmController = TextEditingController();
-
-  void register(BuildContext context) {
-    if (_formKey.currentState.validate()) {
-      _auth
-          .createUserWithEmailAndPassword(
-              email: _emailController.text, password: _passwordController.text)
-          .then((authResult) {
-        authResult.user.sendEmailVerification().then((_) {
-          Navigator.pop(context);
-        });
-      });
-    }
+  void _onFormSubmitted(String email) {
+    _email = email;
+    setState(() => _formSubmitted = true);
+    _auth.currentUser().then((user) => user.sendEmailVerification());
   }
 
   @override
@@ -28,66 +25,9 @@ class EmailRegisterPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Sign up with Email'),
       ),
-      body: Container(
-        margin: EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Spacer(flex: 1),
-
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (!_validateEmail(value)) {
-                    return 'Invalid Email';
-                  }
-                  return null;
-                },
-              ),
-
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                validator: (value) {
-                  if (value.length < 8) {
-                    return 'Password should be at least 8 characters';
-                  }
-                  return null;
-                },
-              ),
-
-              TextFormField(
-                controller: _passwordConfirmController,
-                decoration:
-                    InputDecoration(labelText: 'Confirm Password'),
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return 'Passwords don\'t match';
-                  }
-                  return null;
-                },
-              ),
-
-              SizedBox(height: 16),
-
-              RaisedButton(
-                onPressed: () => register(context),
-                child: Text('Sign up'),
-              ),
-
-              Spacer(flex: 2),
-            ],
-          )
-        )
-      )
+      body: _formSubmitted
+          ? EmailVerificationWidget(_email)
+          : EmailRegistrationForm(_onFormSubmitted),
     );
-  }
-
-  bool _validateEmail(String email) {
-    return RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(email);
   }
 }
