@@ -1,4 +1,5 @@
-import 'package:activitree_edu_flutter/register.dart';
+//import 'package:activitree_edu_flutter/register.dart';
+import 'package:activitree_edu_flutter/register/register.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -120,6 +121,10 @@ class SignIn extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'Please enter some text';
                             }
+                            if (!_validateEmail(value))
+                            {
+                              return ("Invalid email");
+                            }
                             return null;
                           },
                         ),
@@ -133,6 +138,10 @@ class SignIn extends StatelessWidget {
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter some text';
+                            }
+                            if (value.length<8)
+                            {
+                              return ("Password should be at least 8 characters");
                             }
                             return null;
                           },
@@ -207,4 +216,10 @@ class SignIn extends StatelessWidget {
           ),
         ));
   }
+}
+
+bool _validateEmail(String email) {
+  return RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(email);
 }
