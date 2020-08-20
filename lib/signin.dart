@@ -143,9 +143,6 @@ class SignIn extends StatelessWidget {
                             //onPressed: () {
                             //  // Validate will return true if the form is valid, or false if
                             //   // the form is invalid.
-                            //   //if (_formKey.currentState.validate()) {
-                            //   // Process data.
-                            //   //}
                             //   return showDialog(
                             //     context: context,
                             //     builder: (context) {
@@ -157,6 +154,7 @@ class SignIn extends StatelessWidget {
                             //     },
                             //   );
                             onPressed: () async {
+                              if (_formKey.currentState.validate()) {
                               try {
                                 FirebaseUser user = (await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
@@ -173,7 +171,8 @@ class SignIn extends StatelessWidget {
                                 _passwordController.text = "";
                                 // TODO: AlertDialog with error
                               }
-                            },
+                              }
+                            }, 
                             child: Text('Sign In'),
                           ),
                         ),
