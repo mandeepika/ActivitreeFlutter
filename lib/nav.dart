@@ -1,6 +1,7 @@
 import 'package:activitree_edu_flutter/home.dart';
 import 'package:activitree_edu_flutter/signin.dart';
-import 'package:activitree_edu_flutter/register.dart';
+import 'package:activitree_edu_flutter/welcome.dart';
+import 'package:activitree_edu_flutter/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -21,6 +22,7 @@ class _NavState extends State<Nav> {
     MyHomePage(title: 'Flutter Demo Home Page'),
     RegisterPage(),
     SignIn(),
+    WelcomePage(),
     Text(
       'Me',
       style: optionStyle,
