@@ -1,5 +1,5 @@
 import 'package:activitree_edu_flutter/home.dart';
-import 'package:activitree_edu_flutter/register.dart';
+import 'package:activitree_edu_flutter/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -18,7 +18,7 @@ class _NavState extends State<Nav> {
 
   static List<Widget> _widgetOptions = <Widget>[
     MyHomePage(title: 'Flutter Demo Home Page'),
-    RegisterPage(),
+    WelcomePage(),
     Text(
       'Me',
       style: optionStyle,
