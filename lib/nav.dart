@@ -1,5 +1,9 @@
 import 'package:activitree_edu_flutter/home.dart';
+
 import 'package:activitree_edu_flutter/welcome.dart';
+
+import 'package:activitree_edu_flutter/register/register.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
