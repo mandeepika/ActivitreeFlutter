@@ -1,20 +1,54 @@
+import 'package:activitree_edu_flutter/register.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatelessWidget {
   // This widget is the root of your application.
   FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<String> signInWithGoogle() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final AuthResult authResult = await auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await auth.currentUser();
+    assert(user.uid == currentUser.uid);
+
+    return 'signInWithGoogle succeeded: $user';
+  }
+
+  void signOutGoogle() async {
+    await googleSignIn.signOut();
+
+    print("User Sign Out");
+  }
+
   SignIn({Key key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
   static const String _title = 'Flutter Code Sample';
 
-  final myController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    myController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     dispose();
   }
 
@@ -32,7 +66,18 @@ class SignIn extends StatelessWidget {
             children: <Widget>[
               const SizedBox(height: 130),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  signInWithGoogle().whenComplete(() {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return RegisterPage();
+                          //route to register page for testing
+                        },
+                      ),
+                    );
+                  });
+                },
                 child: const Text('Sign in with Google',
                     style: TextStyle(fontSize: 20)),
                 textColor: Colors.white,
@@ -65,6 +110,8 @@ class SignIn extends StatelessWidget {
                       children: <Widget>[
                         TextFormField(
                           //padding: const EdgeInsets.all(20),
+                          controller: _emailController,
+                          //obscureText: true,
                           decoration: const InputDecoration(
                             hintText: 'Enter your email',
                           ),
@@ -78,7 +125,7 @@ class SignIn extends StatelessWidget {
                         ),
                         TextFormField(
                           //padding: const EdgeInsets.all(20),
-                          controller: myController,
+                          controller: _passwordController,
                           decoration: const InputDecoration(
                             hintText: 'Enter your password',
                           ),
@@ -93,22 +140,39 @@ class SignIn extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: RaisedButton(
-                            onPressed: () {
-                              // Validate will return true if the form is valid, or false if
-                              // the form is invalid.
-                              //if (_formKey.currentState.validate()) {
-                              // Process data.
-                              //}
-                              return showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    // Retrieve the text the that user has entered by using the
-                                    // TextEditingController.
-                                    content: Text(myController.text),
-                                  );
-                                },
-                              );
+                            //onPressed: () {
+                            //  // Validate will return true if the form is valid, or false if
+                            //   // the form is invalid.
+                            //   //if (_formKey.currentState.validate()) {
+                            //   // Process data.
+                            //   //}
+                            //   return showDialog(
+                            //     context: context,
+                            //     builder: (context) {
+                            //       return AlertDialog(
+                            //         // Retrieve the text the that user has entered by using the
+                            //         // TextEditingController.
+                            //         content: Text(myController.text),
+                            //       );
+                            //     },
+                            //   );
+                            onPressed: () async {
+                              try {
+                                FirebaseUser user = (await FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                ))
+                                    .user;
+                                // if (user != null) {
+                                //   Navigator.of(context).pushNamed(AppRoutes.menu);
+                                // }
+                              } catch (e) {
+                                print(e);
+                                _emailController.text = "";
+                                _passwordController.text = "";
+                                // TODO: AlertDialog with error
+                              }
                             },
                             child: Text('Sign In'),
                           ),

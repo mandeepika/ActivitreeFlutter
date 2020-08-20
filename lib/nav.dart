@@ -1,5 +1,6 @@
 import 'package:activitree_edu_flutter/home.dart';
 import 'package:activitree_edu_flutter/signin.dart';
+import 'package:activitree_edu_flutter/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -18,6 +19,7 @@ class _NavState extends State<Nav> {
 
   static List<Widget> _widgetOptions = <Widget>[
     MyHomePage(title: 'Flutter Demo Home Page'),
+    RegisterPage(),
     SignIn(),
     Text(
       'Me',
@@ -45,11 +47,12 @@ class _NavState extends State<Nav> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            title: Text('Sign In'),
+            //title: Text('Sign In'),
+            title: Text('Register'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            title: Text('School'),
+            title: Text('Sign In'),
           ),
         ],
         currentIndex: _selectedIndex,
