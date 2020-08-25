@@ -1,3 +1,5 @@
+import 'package:activitree_edu_flutter/welcome.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:activitree_edu_flutter/nav.dart';
 
@@ -7,6 +9,19 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final _auth = FirebaseAuth.instance;
+  bool _loggedIn = false;
+
+  _AppState() {
+    _auth.onAuthStateChanged.listen((user) => setState(() {
+      if (user == null) {
+        _loggedIn = false;
+      } else {
+        _loggedIn = true;
+      }
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,7 +41,7 @@ class _AppState extends State<App> {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Nav(),
+      home: _loggedIn ? Nav() : WelcomePage(),
     );
   }
 }

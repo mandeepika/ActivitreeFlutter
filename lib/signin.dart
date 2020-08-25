@@ -1,5 +1,3 @@
-import 'package:activitree_edu_flutter/register/register.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,7 +7,7 @@ class SignIn extends StatelessWidget {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<String> signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
@@ -27,14 +25,6 @@ class SignIn extends StatelessWidget {
 
     final FirebaseUser currentUser = await auth.currentUser();
     assert(user.uid == currentUser.uid);
-
-    return 'signInWithGoogle succeeded: $user';
-  }
-
-  void signOutGoogle() async {
-    await googleSignIn.signOut();
-
-    print("User Sign Out");
   }
 
   SignIn() : super();
@@ -54,17 +44,9 @@ class SignIn extends StatelessWidget {
             children: <Widget>[
               const SizedBox(height: 130),
               RaisedButton(
-                onPressed: () {
-                  signInWithGoogle().whenComplete(() {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return RegisterPage();
-                          //route to register page for testing
-                        },
-                      ),
-                    );
-                  });
+                onPressed: () async {
+                  await signInWithGoogle();
+                  Navigator.pop(context);
                 },
                 child: const Text('Sign in with Google',
                     style: TextStyle(fontSize: 20)),
@@ -108,8 +90,7 @@ class SignIn extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'Please enter some text';
                             }
-                            if (!_validateEmail(value))
-                            {
+                            if (!_validateEmail(value)) {
                               return ("Invalid email");
                             }
                             return null;
@@ -126,8 +107,7 @@ class SignIn extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'Please enter some text';
                             }
-                            if (value.length<8)
-                            {
+                            if (value.length < 8) {
                               return ("Password should be at least 8 characters");
                             }
                             return null;
@@ -151,22 +131,19 @@ class SignIn extends StatelessWidget {
                             //   );
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                              try {
-                                final authResult = await auth.signInWithEmailAndPassword(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                );
-                                // if (user != null) {
-                                //   Navigator.of(context).pushNamed(AppRoutes.menu);
-                                // }
-                              } catch (e) {
-                                print(e);
-                                _emailController.text = "";
-                                _passwordController.text = "";
-                                // TODO: AlertDialog with error
+                                try {
+                                  await auth.signInWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
+                                } catch (e) {
+                                  print(e);
+                                  _emailController.text = "";
+                                  _passwordController.text = "";
+                                  // TODO: AlertDialog with error
+                                }
                               }
-                              }
-                            }, 
+                            },
                             child: Text('Sign In'),
                           ),
                         ),

@@ -1,3 +1,5 @@
+import 'package:activitree_edu_flutter/register/register.dart';
+import 'package:activitree_edu_flutter/signin.dart';
 import 'package:flutter/material.dart';
 
 // class MyApp extends StatefulWidget {
@@ -47,18 +49,18 @@ class WelcomePage extends StatelessWidget {
                 flex: 1,
               ),
               RaisedButton(
-                  onPressed: () {
-                    print('login pressed');
-                  },
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => SignIn()
+                  )),
                   child: Text('Login',
                       style: TextStyle(
                           color: Colors.white, fontFamily: 'Montserrat')),
                   color: Colors.teal[300]),
               const SizedBox(height: 10),
               RaisedButton(
-                  onPressed: () {
-                    print('Sign-up pressed');
-                  },
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => RegisterPage()
+                  )),
                   child: Text('Sign up',
                       style: TextStyle(
                           color: Colors.white, fontFamily: 'Montserrat')),
