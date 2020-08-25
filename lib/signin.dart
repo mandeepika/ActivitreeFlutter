@@ -1,4 +1,3 @@
-//import 'package:activitree_edu_flutter/register.dart';
 import 'package:activitree_edu_flutter/register/register.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatelessWidget {
   // This widget is the root of your application.
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<String> signInWithGoogle() async {
@@ -38,23 +37,11 @@ class SignIn extends StatelessWidget {
     print("User Sign Out");
   }
 
-  SignIn({Key key}) : super(key: key);
+  SignIn() : super();
   final _formKey = GlobalKey<FormState>();
-  static const String _title = 'Flutter Code Sample';
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    _emailController.dispose();
-    _passwordController.dispose();
-    dispose();
-  }
-
-  @override
-  SignIn createState() => SignIn();
 
   @override
   Widget build(BuildContext context) {
@@ -165,12 +152,10 @@ class SignIn extends StatelessWidget {
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                               try {
-                                FirebaseUser user = (await FirebaseAuth.instance
-                                        .signInWithEmailAndPassword(
+                                final authResult = await auth.signInWithEmailAndPassword(
                                   email: _emailController.text,
                                   password: _passwordController.text,
-                                ))
-                                    .user;
+                                );
                                 // if (user != null) {
                                 //   Navigator.of(context).pushNamed(AppRoutes.menu);
                                 // }
