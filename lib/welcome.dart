@@ -21,7 +21,11 @@ class WelcomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Spacer(
-                flex: 5,
+                flex: 2,
+              ),
+              Image.asset('assets/newlogo.png', height: 120, width: 120),
+              Spacer(
+                flex: 2,
               ),
               Center(
                   child: Text(
@@ -36,7 +40,9 @@ class WelcomePage extends StatelessWidget {
               ),
               Center(
                   child: Text(
-                      'Lorem ipsum dolor sit amet consectituer edipiscing elit and more text here varsha is an idiot excuse you oh no caption here ayyyyyyyy bcdefg slkfjlskjfa lfjlkadjs f lkasdjf laksjf ')),
+                'Lorem ipsum dolor sit amet consectituer edipiscing elit and more text here varsha is an idiot excuse you oh no caption here ayyyyyyyy bcdefg slkfjlskjfa lfjlkadjs f lkasdjf laksjf and more info here ok done.',
+                textAlign: TextAlign.center,
+              )),
               Spacer(
                 flex: 1,
               ),
@@ -48,7 +54,7 @@ class WelcomePage extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white, fontFamily: 'Montserrat')),
                   color: Colors.teal[300]),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               RaisedButton(
                   onPressed: () {
                     print('Sign-up pressed');
