@@ -1,13 +1,7 @@
 import 'package:activitree_edu_flutter/home.dart';
-import 'package:activitree_edu_flutter/signin.dart';
-import 'package:activitree_edu_flutter/welcome.dart';
-import 'package:activitree_edu_flutter/register/register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Nav extends StatefulWidget {
-  Nav({Key key}) : super(key: key);
-
   @override
   _NavState createState() => _NavState();
 }
@@ -15,18 +9,10 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _selectedIndex = 0;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
   static List<Widget> _widgetOptions = <Widget>[
-    MyHomePage(title: 'Flutter Demo Home Page'),
-    RegisterPage(),
-    SignIn(),
-    WelcomePage(),
-    Text(
-      'Me',
-      style: optionStyle,
-    ),
+    HomePage(),
+    Text('Games Page Placeholder'),
+    Text('Profile Page Placeholder'),
   ];
 
   void _onItemTapped(int index) {
@@ -45,20 +31,20 @@ class _NavState extends State<Nav> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            title: Text('Temp'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            //title: Text('Sign In'),
-            title: Text('Register'),
+            icon: Icon(Icons.games),
+            title: Text('Games'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text('Sign In'),
+            icon: Icon(Icons.portrait),
+            title: Text('Profile'),
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.blueGrey,
         onTap: _onItemTapped,
       ),
     );
