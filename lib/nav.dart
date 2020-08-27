@@ -1,3 +1,4 @@
+import 'package:activitree_edu_flutter/completeprofile.dart';
 import 'package:activitree_edu_flutter/home.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +12,8 @@ class _NavState extends State<Nav> {
 
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    Text('Games Page Placeholder'),
-    Text('Profile Page Placeholder'),
+    CompleteProf(),
+    Text('Profile Page Placeholder')
   ];
 
   void _onItemTapped(int index) {
