@@ -1,7 +1,9 @@
+import 'package:activitree_edu_flutter/dashboard.dart';
 import 'package:activitree_edu_flutter/home.dart';
+import 'package:activitree_edu_flutter/todolist.dart';
 import 'package:activitree_edu_flutter/signin.dart';
 import 'package:activitree_edu_flutter/welcome.dart';
-import 'package:activitree_edu_flutter/register/register.dart';
+//import 'package:activitree_edu_flutter/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -19,8 +21,8 @@ class _NavState extends State<Nav> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static List<Widget> _widgetOptions = <Widget>[
-    MyHomePage(title: 'Flutter Demo Home Page'),
-    RegisterPage(),
+    MyStatefulWidget(),
+    ToDoList(),
     SignIn(),
     WelcomePage(),
     Text(
@@ -45,12 +47,12 @@ class _NavState extends State<Nav> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            title: Text('Dashboard'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
             //title: Text('Sign In'),
-            title: Text('Register'),
+            title: Text('To Do List'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),

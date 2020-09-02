@@ -82,7 +82,7 @@ class SignIn extends StatelessWidget {
                 child: const Text('Sign in with Google',
                     style: TextStyle(fontSize: 20)),
                 textColor: Colors.white,
-                color: Colors.red[800],
+                color: Colors.teal[300],
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                     side: BorderSide(color: Colors.white)),
@@ -93,7 +93,7 @@ class SignIn extends StatelessWidget {
                 child: const Text('Sign In with Facebook',
                     style: TextStyle(fontSize: 20)),
                 textColor: Colors.white,
-                color: Colors.lightBlue[900],
+                color: Colors.teal[300],
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                     side: BorderSide(color: Colors.white)),
@@ -178,7 +178,6 @@ class SignIn extends StatelessWidget {
                                 print(e);
                                 _emailController.text = "";
                                 _passwordController.text = "";
-                                // TODO: AlertDialog with error
                               }
                               }
                             }, 
