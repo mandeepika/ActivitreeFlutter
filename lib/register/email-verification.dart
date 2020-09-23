@@ -29,9 +29,9 @@ class EmailVerificationWidget extends StatelessWidget {
           SizedBox(height: 16),
           RaisedButton(
             child: Text('I have verified my email'),
-            onPressed: () async {
-              final user = await _auth.currentUser();
-              if (user.isEmailVerified) {
+            onPressed: () {
+              final user = _auth.currentUser;
+              if (user.emailVerified) {
                 Navigator.pop(context);
               } else {
                 Scaffold.of(context).showSnackBar(SnackBar(

@@ -6,6 +6,7 @@ import 'package:activitree_edu_flutter/welcome.dart';
 //import 'package:activitree_edu_flutter/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:activitree_edu_flutter/store.dart';
 
 class Nav extends StatefulWidget {
   Nav({Key key}) : super(key: key);
@@ -21,10 +22,10 @@ class _NavState extends State<Nav> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static List<Widget> _widgetOptions = <Widget>[
-    MyStatefulWidget(),
+    Dashboard(),
     ToDoList(),
-    SignIn(),
-    WelcomePage(),
+    Store(),
+    //WelcomePage(),
     Text(
       'Me',
       style: optionStyle,
@@ -56,7 +57,7 @@ class _NavState extends State<Nav> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            title: Text('Sign In'),
+            title: Text('Store'),
           ),
         ],
         currentIndex: _selectedIndex,

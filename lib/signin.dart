@@ -1,16 +1,25 @@
 //import 'package:activitree_edu_flutter/register.dart';
+import 'package:activitree_edu_flutter/dashboard.dart';
 import 'package:activitree_edu_flutter/register/register.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignIn extends StatelessWidget {
+  
   // This widget is the root of your application.
+
+  
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<String> signInWithGoogle() async {
+    
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
@@ -20,13 +29,13 @@ class SignIn extends StatelessWidget {
       idToken: googleSignInAuthentication.idToken,
     );
 
-    final AuthResult authResult = await auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
+    final authResult = await auth.signInWithCredential(credential);
+    final user = authResult.user;
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
 
-    final FirebaseUser currentUser = await auth.currentUser();
+    final currentUser = auth.currentUser;
     assert(user.uid == currentUser.uid);
 
     return 'signInWithGoogle succeeded: $user';
@@ -37,6 +46,12 @@ class SignIn extends StatelessWidget {
 
     print("User Sign Out");
   }
+
+  // void inputData() async {
+  //   final FirebaseUser user = await auth.currentUser();
+  //   final uid = user.uid;
+  //   print(uid);
+  // }
 
   SignIn({Key key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
@@ -72,7 +87,7 @@ class SignIn extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return RegisterPage();
+                          return Dashboard();
                           //route to register page for testing
                         },
                       ),
