@@ -54,8 +54,9 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
                     child: new Text('REMOVE'),
                     onPressed: () {
                       _removeTodoItem(index);
-                      _onRemove(items.elementAt(index));
                       Navigator.of(context).pop();
+                      _onSubmitted();
+                      //_onRemove(items.elementAt(index));
                     })
               ]);
         });
@@ -98,7 +99,7 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
           body: new TextField(
             autofocus: true,
             onSubmitted: (val) {
-              _onSubmitted(val);
+              _onSubmitted();
               _addTodoItem(val);
               Navigator.pop(context); // Close the add todo screen
             },
@@ -111,25 +112,25 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
   }
 
 //added val parameter to take to do array value from add to do screen
-    void _onSubmitted(val) async {
+    void _onSubmitted() async {
     var firebaseUser = await auth.currentUser.uid;
     firestoreInstance
         .collection("users")
         .document(auth.currentUser.uid)
-        .updateData({
-      "To Do Items": FieldValue.arrayUnion([val])
+        .setData({
+      "To Do Items": FieldValue.arrayUnion(items)
     }).then((_) {
       print("success!");
     });
   }
-  void _onRemove(elementIndexItem) async{
-  var firebaseUser = await auth.currentUser.uid;
-  firestoreInstance.collection("users").document(auth.currentUser.uid).updateData({
-  "To Do Items" : elementIndexItem.delete()
-    }).then((_) {
-    print("success!");
-  });
-}
+//   void _onRemove(elementIndexItem) async{
+//   var firebaseUser = await auth.currentUser.uid;
+//   firestoreInstance.collection("users").document(auth.currentUser.uid).updateData({
+//   "To Do Items" : elementIndexItem: FieldValue.delete()
+//     }).then((_) {
+//     print("success!");
+//   });
+// }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
