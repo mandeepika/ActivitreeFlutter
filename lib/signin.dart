@@ -12,19 +12,17 @@ class SignIn extends StatelessWidget {
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
+    final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
 
-    final AuthResult authResult = await auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
+    final authResult = await auth.signInWithCredential(credential);
+    final user = authResult.user;
 
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
-
-    final FirebaseUser currentUser = await auth.currentUser();
-    assert(user.uid == currentUser.uid);
+    assert(user.uid == auth.currentUser.uid);
   }
 
   SignIn() : super();
