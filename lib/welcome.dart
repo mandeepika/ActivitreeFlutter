@@ -17,7 +17,7 @@ class WelcomePage extends StatelessWidget {
           title: const Text('Login or Sign-up'),
         ),
         body: Container(
-          margin: const EdgeInsets.all(20),
+          margin: const EdgeInsets.all(30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -31,7 +31,7 @@ class WelcomePage extends StatelessWidget {
               ),
               Center(
                   child: Text(
-                'Welcome to Activitree',
+                'Welcome to Treehouse',
                 style: TextStyle(
                     fontSize: 25,
                     fontFamily: 'Montserrat',
@@ -42,25 +42,23 @@ class WelcomePage extends StatelessWidget {
               ),
               Center(
                   child: Text(
-                'Lorem ipsum dolor sit amet consectituer edipiscing elit and more text here varsha is an idiot excuse you oh no caption here ayyyyyyyy bcdefg slkfjlskjfa lfjlkadjs f lkasdjf laksjf and more info here ok done.',
+                'We bridge the gap between high school and college, and make learning accessible and fun for both high schoolers and college students!',
                 textAlign: TextAlign.center,
               )),
               Spacer(
                 flex: 1,
               ),
               RaisedButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => SignIn()
-                  )),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignIn())),
                   child: Text('Login',
                       style: TextStyle(
                           color: Colors.white, fontFamily: 'Montserrat')),
                   color: Colors.teal[300]),
               const SizedBox(height: 10),
               RaisedButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => RegisterPage()
-                  )),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RegisterPage())),
                   child: Text('Sign up',
                       style: TextStyle(
                           color: Colors.white, fontFamily: 'Montserrat')),
