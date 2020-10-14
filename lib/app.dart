@@ -1,5 +1,6 @@
 import 'package:activitree_edu_flutter/welcome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:activitree_edu_flutter/nav.dart';
 
@@ -9,17 +10,32 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final _auth = FirebaseAuth.instance;
   bool _loggedIn = false;
+  bool _initialized = false;
+  bool _error = false;
 
-  _AppState() {
-    _auth.onAuthStateChanged.listen((user) => setState(() {
-      if (user == null) {
-        _loggedIn = false;
-      } else {
-        _loggedIn = true;
-      }
-    }));
+  // Define an async function to initialize FlutterFire
+  Future<void> initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire().then((value) => FirebaseAuth.instance
+        .authStateChanges()
+        .listen((user) => setState(() => _loggedIn = user != null)));
+    super.initState();
   }
 
   @override
@@ -41,7 +57,8 @@ class _AppState extends State<App> {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: _loggedIn ? Nav() : WelcomePage(),
+      home:
+          _initialized ? _loggedIn ? Nav() : WelcomePage() : Text("Loading..."),
     );
   }
 }

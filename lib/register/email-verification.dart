@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EmailVerificationWidget extends StatelessWidget {
-  final _auth = FirebaseAuth.instance;
+  final _user = FirebaseAuth.instance.currentUser;
   final String _email;
 
   EmailVerificationWidget(this._email);
@@ -23,15 +23,13 @@ class EmailVerificationWidget extends StatelessWidget {
           ),
           SizedBox(height: 8),
           Center(
-            child: Text(
-                'The verification email is sent to $_email.'),
+            child: Text('The verification email is sent to $_email.'),
           ),
           SizedBox(height: 16),
           RaisedButton(
             child: Text('I have verified my email'),
             onPressed: () async {
-              final user = await _auth.currentUser();
-              if (user.isEmailVerified) {
+              if (_user.emailVerified) {
                 Navigator.pop(context);
               } else {
                 Scaffold.of(context).showSnackBar(SnackBar(
