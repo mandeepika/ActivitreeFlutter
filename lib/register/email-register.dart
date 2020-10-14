@@ -16,7 +16,7 @@ class _EmailRegisterState extends State<EmailRegisterPage> {
   void _onFormSubmitted(String email) {
     _email = email;
     setState(() => _formSubmitted = true);
-    _auth.currentUser().then((user) => user.sendEmailVerification());
+    _auth.currentUser.sendEmailVerification();
   }
 
   @override
