@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,15 +10,12 @@ class CompleteProf extends StatefulWidget {
 
 class _CompleteProfState extends State<CompleteProf> {
   FirebaseAuth auth = FirebaseAuth.instance;
-  _CompleteProfState() {
-    if (auth.currentUser != null) {
-      auth.currentUser().then((x) {
-        print(x.uid);
-      });
-    }
-  }
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   String dropdownValue = 'Choose your Class Level';
+  String classlevel = "";
+  String school = "";
+  
 
   TextEditingController _textEditingController = new TextEditingController();
   List<String> _values = new List();
@@ -74,6 +72,9 @@ class _CompleteProfState extends State<CompleteProf> {
             children: <Widget>[
               const SizedBox(height: 60),
               TextField(
+                onChanged: (text) {
+                  school = text;
+                },
                 obscureText: false,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -94,6 +95,7 @@ class _CompleteProfState extends State<CompleteProf> {
                 onChanged: (String newValue) {
                   setState(() {
                     dropdownValue = newValue;
+                    classlevel = dropdownValue;
                   });
                 },
                 items: <String>[
@@ -141,6 +143,11 @@ class _CompleteProfState extends State<CompleteProf> {
                 textColor: Colors.white,
                 padding: EdgeInsets.all(8.0),
                 onPressed: () {
+                  var docRef =
+                  firestore.collection("users").doc(auth.currentUser.uid);
+
+                  Map<String, dynamic> map = {"grade": classlevel, "highSchool": school, "subjects": _values};
+                  docRef.set(map);
                   /*...*/
                 },
                 child: Text(
