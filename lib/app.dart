@@ -1,4 +1,6 @@
+import 'package:activitree_edu_flutter/completeprofile.dart';
 import 'package:activitree_edu_flutter/welcome.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +34,23 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    initializeFlutterFire().then((value) => FirebaseAuth.instance
-        .authStateChanges()
-        .listen((user) => setState(() => _loggedIn = user != null)));
+    initializeFlutterFire().then(
+        (value) => FirebaseAuth.instance.authStateChanges().listen((user) {
+              setState(() => _loggedIn = user != null);
+              final uid = FirebaseAuth.instance.currentUser.uid;
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(uid)
+                  .get()
+                  .then((doc) {
+                if (!doc.exists) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CompleteProfilePage()));
+                }
+              });
+            }));
     super.initState();
   }
 
@@ -57,8 +73,11 @@ class _AppState extends State<App> {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:
-          _initialized ? _loggedIn ? Nav() : WelcomePage() : Text("Loading..."),
+      home: _initialized
+          ? _loggedIn
+              ? Nav()
+              : WelcomePage()
+          : Text("Loading..."),
     );
   }
 }

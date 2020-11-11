@@ -12,7 +12,7 @@ class _NavState extends State<Nav> {
 
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    CompleteProf(),
+    CompleteProfilePage(),
     Text('Profile Page Placeholder')
   ];
 
